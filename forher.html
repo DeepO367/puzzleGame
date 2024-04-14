@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Owam's Puzzle</title>
+<style>
+    *{
+        
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-size: cover; 
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-image: url(PinkBG.jpg);
+    }
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+    }
+    #container {
+        position: relative;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    #puzzle {
+        border-collapse: collapse;
+        margin: 0 auto;
+    }
+    td {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-size: 16px;
+    }
+    .highlight {
+        background-color: rgb(255, 0, 0);
+    }
+    #keywords {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .keyword {
+        margin-bottom: 5px;
+    }
+    .keyword.found {
+        color: green;
+    }
+    #submit-btn-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #submit-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        overflow-y: auto;
+        width: 300px;
+        height: 500px;
+    }
+    .popup h2 {
+        margin-top: 0;
+    }
+    .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<h1>Owam's Puzzle</h1>
+<div id="container">
+    <table id="puzzle">
+        <!-- Puzzle grid here -->
+        <tr>
+            <td>E</td><td>N</td><td>C</td><td>H</td><td>A</td><td>N</td><td>T</td><td>E</td><td>D</td><td>B</td><td>S</td><td>F</td><td>K</td>
+        </tr>
+        <tr>
+            <td>E</td><td>D</td><td>G</td><td>J</td><td>A</td><td>I</td><td>E</td><td>G</td><td>A</td><td>G</td><td>J</td><td>A</td><td>A</td>
+        </tr>
+        <tr>
+            <td>F</td><td>Q</td><td>A</td><td>R</td><td>E</td><td>T</td><td>E</td><td>U</td><td>L</td><td>G</td><td>S</td><td>B</td><td>B</td>
+        </tr>
+        <tr>
+            <td>Q</td><td>B</td><td>I</td><td>W</td><td>T</td><td>U</td><td>B</td><td>C</td><td>L</td><td>O</td><td>Z</td><td>B</td><td>M</td>
+        </tr>
+        <tr>
+            <td>Y</td><td>T</td><td>V</td><td>A</td><td>N</td><td>Y</td><td>T</td><td>H</td><td>I</td><td>N</td><td>G</td><td>D</td><td>X</td>
+        </tr>
+        <tr>
+            <td>Y</td><td>H</td><td>R</td><td>F</td><td>A</td><td>I</td><td>R</td><td>I</td><td>E</td><td>J</td><td>U</td><td>I</td><td>E</td>
+        </tr>
+        <tr>
+            <td>U</td><td>K</td><td>Q</td><td>W</td><td>L</td><td>E</td><td>S</td><td>D</td><td>R</td><td>Z</td><td>S</td><td>R</td><td>L</td>
+        </tr>
+        <tr>
+            <td>U</td><td>A</td><td>R</td><td>E</td><td>Q</td><td>V</td><td>F</td><td>A</td><td>L</td><td>L</td><td>I</td><td>N</td><td>G</td>
+        </tr>
+        <tr>
+            <td>I</td><td>N</td><td>G</td><td>F</td><td>V</td><td>F</td><td>M</td><td>E</td><td>L</td><td>H</td><td>P</td><td>Q</td><td>R</td>
+        </tr>
+        <tr>
+            <td>N</td><td>X</td><td>P</td><td>O</td><td>W</td><td>Q</td><td>F</td><td>R</td><td>P</td><td>X</td><td>E</td><td>L</td><td>G</td>
+        </tr>
+        <tr>
+            <td>F</td><td>A</td><td>I</td><td>R</td><td>Y</td><td>T</td><td>A</td><td>L</td><td>E</td><td>B</td><td>S</td><td>F</td><td>K</td>
+        </tr>
+        <tr>
+            <td>E</td><td>D</td><td>G</td><td>J</td><td>A</td><td>I</td><td>E</td><td>G</td><td>A</td><td>G</td><td>J</td><td>A</td><td>A</td>
+        </tr>
+    </table>
+    <div id="keywords">
+        <h2>Keywords</h2>
+        <div class="keyword">Enchanted</div>
+        <div class="keyword">Anything</div>
+        <div class="keyword">Falling</div>
+        <div class="keyword">Fairytale</div>
+    </div>
+</div>
+<div id="submit-btn-container">
+    <button id="submit-btn" disabled>Submit</button>
+</div>
+
+<div id="popup" class="popup">
+    <span class="close-btn">&times;</span>
+    <h2>Songs from Anonymous</h2>
+    
+    <ul>
+        <li>Enchanted - Manana</li>
+        <li>Anything - Manana</li>
+        <li>Falling - The Sn Project</li>
+        <li>Fairytale - Liquideep</li>
+    </ul>
+    <p>Read caption below!</p>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4f9nReAINM7EsHfIpTVQSU?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <p>I hope this songs find a way to your heart, same way they do to me.</p> 
+    <p>1st Song lols I hope opening verse sounds familiar 😊</p>
+    <p>2nd Song, well lets found out how much I can do for you soon💕.</p>
+    <p>3rd song, that's just how I feel</p> 
+    <p>4th song hope this feels like a fairytale already</p>
+    <p>-From Anonymous to OWAM😂😅(hope i got it right now)</p>
+</div>
+
+<script>
+    const words = ['enchanted', 'anything', 'falling', 'fairytale'];
+    const wordLocations = {
+        'enchanted': [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [0, 7], [0, 8]],
+        'anything': [[4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8], [4, 9], [4, 10]],
+        'falling': [[7, 6], [7, 7], [7, 8], [7, 9], [7, 10], [7, 11], [7, 12]],
+        'fairytale': [[10, 0], [10, 1], [10, 2], [10, 3], [10, 4], [10, 5], [10, 6], [10, 7], [10, 8]]
+    };
+    let foundWords = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Remove highlighting of words initially
+      document.querySelectorAll('.highlight').forEach(cell => cell.classList.remove('highlight'));
+    });
+
+    const submitButton = document.getElementById('submit-btn');
+    const popup = document.getElementById('popup');
+    const closeBtn = document.querySelector('.close-btn');
+
+    // Event listener for cell click
+    document.getElementById('puzzle').addEventListener('click', function(event) {
+        const cell = event.target;
+        if (!cell.tagName === 'TD' || cell.textContent === '') return;
+
+        const word = getWordFromCell(cell);
+        if (word && !foundWords.includes(word)) {
+            foundWords.push(word);
+            highlightSelectedWord(word);
+            if (foundWords.length === words.length) {
+                submitButton.disabled = false;
+            }
+        }
+    });
+
+    // Function to get the word containing the clicked cell
+    function getWordFromCell(cell) {
+        const rowIndex = cell.parentNode.rowIndex;
+        const colIndex = cell.cellIndex;
+        for (const word in wordLocations) {
+            if (wordLocations[word].some(pos => pos[0] === rowIndex && pos[1] === colIndex)) {
+                return word;
+            }
+        }
+        return null;
+    }
+
+    // Function to highlight the selected word
+    function highlightSelectedWord(word) {
+        wordLocations[word].forEach(pos => {
+            const [row, col] = pos;
+            const cell = document.getElementById('puzzle').rows[row].cells[col];
+            cell.classList.add('highlight');
+        });
+        const keywordIndex = words.indexOf(word);
+        document.querySelectorAll('.keyword')[keywordIndex].classList.add('found');
+    }
+
+    // Submit button click event
+    submitButton.addEventListener('click', function() {
+        if (foundWords.length === words.length) {
+            showPopup();
+        } else {
+            alert('Please find all the words before submitting.');
+        }
+    });
+
+    // Function to display the popup
+    function showPopup() {
+        // document.getElementById('word-list').innerHTML = words.map(word => `<li></li>`).join('');
+        popup.style.display = 'block';
+    }
+
+    // Close button click event
+    closeBtn.addEventListener('click', function() {
+        popup.style.display = 'none';
+    });
+</script>
+</body>
+</html>
